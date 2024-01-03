@@ -18,17 +18,22 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    QPushButton *on_btn;
-    QPushButton *off_btn;
+    bool eventFilter(QObject* object, QEvent* event);
+
+    QPushButton *inc_ontime_btn;
+    QPushButton *dec_ontime_btn;
 
     QPushButton *inc_period_btn;
     QPushButton *dec_period_btn;
 
-    QLineEdit *lineEdit;
+    QLineEdit *lineEdit, *lineEdit_2;
 
-    double period;
+    double timeon = 0;
+    double period = 0;
 
-private slots:
+
+
+public slots:
     void on_pushButton_clicked();
 
     void on_pushButton_2_clicked();
@@ -37,10 +42,18 @@ private slots:
 
     void on_pushButton_6_clicked();
 
+    void on_clicked(const QString& digit);
+
+     void on_clickedbackspace();
+
+     void on_clickedenter();
+
 private:
     Ui::MainWindow *ui;
     hwHandler h;
     keypad *key;
+    bool flag = false;
+
 
 };
 #endif // MAINWINDOW_H

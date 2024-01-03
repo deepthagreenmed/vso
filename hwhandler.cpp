@@ -25,25 +25,17 @@ hwHandler::hwHandler(QObject *parent):
 }
 
 
-void hwHandler::vso_on(double periodCount)
+void hwHandler::vso_ontime(double ontime)
 {
-    qDebug()<<periodCount;
-
-   // if(periodCount<0.083||periodCount>0.200)
-     //   return;
-//    qDebug()<<"hello";
-    *((uint16_t *) (mapped_dev_base  + VSO_PWM_PERIOD_REG ))    = (uint16_t)(periodCount);
-//    qDebug()<<"hello";
-    *((uint16_t *) (mapped_dev_base  + VSO_PWM_ON_REG ))   = VSO_ON_MASK;
-    qDebug()<<"VSO ON";
-
+    qDebug()<<ontime;
+    *((uint8_t *) (mapped_dev_base  + VSO_PWM_ON_REG ))   = ontime;
 }
 
-void hwHandler::vso_off()
+void hwHandler::vso_period(double count)
 {
+    qDebug()<<count;
 
-    *((uint16_t *) (mapped_dev_base  + VSO_PWM_ON_REG ))   = VSO_OFF_MASK;
-    qDebug()<<"VSO Off";
+    *((uint16_t *) (mapped_dev_base  + VSO_PWM_PERIOD_REG ))    = (uint16_t)(count);
 }
 
 

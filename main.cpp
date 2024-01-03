@@ -69,13 +69,13 @@ int main(int argc, char **argv) {
     QHBoxLayout *layout2 = new QHBoxLayout;
 
     // Add buttons
-    layout2->addWidget(window.on_btn);
-    layout2->addWidget(window.off_btn);
-
     layout2->addWidget(window.inc_period_btn);
     layout2->addWidget(window.dec_period_btn);
+    layout2->addWidget(window.inc_ontime_btn);
+    layout2->addWidget(window.dec_ontime_btn);
 
     layout2->addWidget(window.lineEdit);
+    layout2->addWidget(window.lineEdit_2);
 
     QWidget *subWidget = new QWidget;
     subWidget->setLayout(layout2);
