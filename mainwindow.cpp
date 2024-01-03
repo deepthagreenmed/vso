@@ -100,12 +100,12 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_pushButton_5_clicked()
 {
-//    if(period > 0.083)
-//    {
-//       period = period - 0.117;
-//    }
+    if(period > 125)
+    {
+       period = period - 1;
+    }
 
-    period=period+100;
+    //period=period+100;
     h.vso_ontime(timeon);
     h.vso_period(period);
 
@@ -116,12 +116,12 @@ void MainWindow::on_pushButton_5_clicked()
 
 void MainWindow::on_pushButton_6_clicked()
 {
-//    if(period < 0.2)
-//    {
-//        period = period + 0.117;
-//    }
+    if(period < 83)
+    {
+        period = period + 1;
+    }
 
-    period=period-100;
+    //period=period-100;
     h.vso_ontime(timeon);
     h.vso_period(period);
 

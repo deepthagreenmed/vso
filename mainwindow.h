@@ -1,5 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+
 #include "hwhandler.h"
 #include "keypad.h"
 
@@ -28,9 +29,10 @@ public:
 
     QLineEdit *lineEdit, *lineEdit_2;
 
-    double timeon = 0;
-    double period = 0;
-
+    //double timeon = 0.001;
+    //double period = 0.083;
+    double timeon=10;
+    double period=125;
 
 
 public slots:
