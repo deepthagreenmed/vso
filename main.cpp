@@ -1,3 +1,7 @@
+#include "mainwindow.h"
+#include "plotupdater.h"
+#include "keypad.h"
+
 #include <QApplication>
 #include <QMainWindow>
 #include <QHBoxLayout>
@@ -16,10 +20,6 @@
 #include <qwt_plot_grid.h>
 #include <qwt_symbol.h>
 #include <qwt_legend.h>
-
-#include "mainwindow.h"
-#include "plotupdater.h"
-#include "keypad.h"
 
 int main(int argc, char **argv) {
     QApplication app(argc, argv);
