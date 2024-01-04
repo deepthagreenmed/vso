@@ -6,6 +6,7 @@
 
 #include <QMainWindow>
 #include <QPushButton>
+#include <QLabel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,15 +25,13 @@ public:
     QPushButton *inc_ontime_btn;
     QPushButton *dec_ontime_btn;
 
-    QPushButton *inc_period_btn;
-    QPushButton *dec_period_btn;
+    QPushButton *inc_freq_btn;
+    QPushButton *dec_freq_btn;
 
     QLineEdit *lineEdit, *lineEdit_2;
 
-    //double timeon = 0.001;
-    //double period = 0.083;
-    double timeon=10;
-    double period=125;
+    double timeon = 10;                 //us
+    double freq = 8000;                 //Hz
 
 
 public slots:

@@ -18,20 +18,20 @@ MainWindow::MainWindow(QWidget *parent)
     dec_ontime_btn->setStyleSheet("QPushButton {background-color: red; color: white; }");
     connect(dec_ontime_btn, &QPushButton::clicked, this, &MainWindow::on_pushButton_2_clicked);
 
-    inc_period_btn = new QPushButton("increase period", this);
-    connect(inc_period_btn, &QPushButton::clicked, this, &MainWindow::on_pushButton_5_clicked);
-    inc_period_btn->setStyleSheet("QPushButton {background-color: red; color: white; }");
+    inc_freq_btn = new QPushButton("increase frequency", this);
+    connect(inc_freq_btn, &QPushButton::clicked, this, &MainWindow::on_pushButton_5_clicked);
+    inc_freq_btn->setStyleSheet("QPushButton {background-color: red; color: white; }");
 
-    dec_period_btn = new QPushButton("decrease period", this);
-    connect(dec_period_btn, &QPushButton::clicked, this, &MainWindow::on_pushButton_6_clicked);
-    dec_period_btn->setStyleSheet("QPushButton {background-color: red; color: white; }");
+    dec_freq_btn = new QPushButton("decrease frequency", this);
+    connect(dec_freq_btn, &QPushButton::clicked, this, &MainWindow::on_pushButton_6_clicked);
+    dec_freq_btn->setStyleSheet("QPushButton {background-color: red; color: white; }");
 
     lineEdit = new QLineEdit(QString::number(timeon));
     QPalette palette = lineEdit->palette();
     palette.setColor(QPalette::WindowText, Qt::blue);
     lineEdit->setPalette(palette);
 
-    lineEdit_2 = new QLineEdit(QString::number(period));
+    lineEdit_2 = new QLineEdit(QString::number(freq));
     QPalette palette2 = lineEdit_2->palette();
     palette2.setColor(QPalette::WindowText, Qt::blue);
     lineEdit_2->setPalette(palette2);
@@ -79,54 +79,55 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 
 void MainWindow::on_pushButton_clicked()
 {
-    timeon=timeon+1;
+    timeon=timeon+10;
+
     h.vso_ontime(timeon);
-    h.vso_period(period);
+    h.vso_period(1000000/freq);
 
     lineEdit->setText(QString::number(timeon));
-    lineEdit_2->setText(QString::number(period));
+    lineEdit_2->setText(QString::number(1000000/freq));
 
 }
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    timeon=timeon-1;
+    timeon=timeon-10;
+
     h.vso_ontime(timeon);
+    h.vso_period(1000000/freq);
 
     lineEdit->setText(QString::number(timeon));
-    lineEdit_2->setText(QString::number(period));
-
-}
-
-void MainWindow::on_pushButton_5_clicked()
-{
-    if(period > 125)
-    {
-       period = period - 1;
-    }
-
-    //period=period+100;
-    h.vso_ontime(timeon);
-    h.vso_period(period);
-
-    lineEdit->setText(QString::number(timeon));
-    lineEdit_2->setText(QString::number(period));
+    lineEdit_2->setText(QString::number(freq));
 
 }
 
 void MainWindow::on_pushButton_6_clicked()
 {
-    if(period < 83)
+    if(freq <= 12000)
     {
-        period = period + 1;
+       freq = freq - 100;
     }
 
-    //period=period-100;
     h.vso_ontime(timeon);
-    h.vso_period(period);
+    h.vso_period(1000000/freq);
 
     lineEdit->setText(QString::number(timeon));
-    lineEdit_2->setText(QString::number(period));
+    lineEdit_2->setText(QString::number(freq));
+
+}
+
+void MainWindow::on_pushButton_5_clicked()
+{
+    if(freq >= 5000)
+    {
+        freq = freq + 100;
+    }
+
+    h.vso_ontime(timeon);
+    h.vso_period(1000000/freq);
+
+    lineEdit->setText(QString::number(timeon));
+    lineEdit_2->setText(QString::number(freq));
 
 }
 
@@ -156,11 +157,12 @@ void MainWindow::on_clicked(const QString& digit)
           }
       }
 
+
     timeon = lineEdit->text().toDouble(&ok);
-    period = lineEdit_2->text().toDouble(&ok2);
+    freq = lineEdit_2->text().toDouble(&ok2);
 
     lineEdit->setText(QString::number(timeon));
-    lineEdit_2->setText(QString::number(period));
+    lineEdit_2->setText(QString::number(freq));
 
 }
 
@@ -188,10 +190,10 @@ void MainWindow::on_clickedbackspace()
     }
 
     timeon = lineEdit->text().toDouble(&ok);
-    period = lineEdit_2->text().toDouble(&ok2);
+    freq = lineEdit_2->text().toDouble(&ok2);
 
     lineEdit->setText(QString::number(timeon));
-    lineEdit_2->setText(QString::number(period));
+    lineEdit_2->setText(QString::number(freq));
 
 }
 
@@ -203,10 +205,10 @@ void MainWindow::on_clickedenter()
     lineEdit_2->clearFocus();
 
     h.vso_ontime(timeon);
-    h.vso_period(period);
+    h.vso_period(1000000/freq);
 
     lineEdit->setText(QString::number(timeon));
-    lineEdit_2->setText(QString::number(period));
+    lineEdit_2->setText(QString::number(freq));
 
 
 }

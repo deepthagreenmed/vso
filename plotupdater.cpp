@@ -15,11 +15,11 @@
 #include <vector>
 #include <iostream>
 
-//#define OUTPUT_MIN 0
-//#define OUTPUT_MAX 16383
-//#define PRESSURE_MIN -1       // min is 0 for sensors that give absolute values
-//#define PRESSURE_MAX 206842.7   // 30psi (and we want results in pascals)
-//#define PRESSURE_MAX 15 // in psi
+#define OUTPUT_MIN 0
+#define OUTPUT_MAX 16383
+#define PRESSURE_MIN -1       // min is 0 for sensors that give absolute values
+#define PRESSURE_MAX 206842.7   // 30psi (and we want results in pascals)
+#define PRESSURE_MAX 15 // in psi
 
 PlotUpdater::PlotUpdater(QwtPlotCurve *curve, QwtPlot *plot) : curve(curve), plot(plot) {
 
@@ -105,9 +105,9 @@ double PlotUpdater::convert()
     //qDebug()<<rx[0]<<rx[1];
 
     sample = (uint16_t)(((rx[0] & 0x3F) << 8) + rx[1]);
-    //float pressure = 1.0 * ((sample - OUTPUT_MIN) * (PRESSURE_MAX - PRESSURE_MIN) / (OUTPUT_MAX - OUTPUT_MIN) + PRESSURE_MIN);
+    float pressure = 1.0 * ((sample - OUTPUT_MIN) * (PRESSURE_MAX - PRESSURE_MIN) / (OUTPUT_MAX - OUTPUT_MIN) + PRESSURE_MIN);
     //qDebug()<< "sample: " << sample << "pressure: " << pressure;
     //qDebug()<<sample;
     //qDebug()<<pressure;
-    return sample;
+    return pressure;
 }
