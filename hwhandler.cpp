@@ -28,6 +28,7 @@ hwHandler::hwHandler(QObject *parent):
 void hwHandler::vso_ontime(double ontime)
 {
     qDebug()<<ontime;
+
     *((uint8_t *) (mapped_dev_base  + VSO_PWM_ON_REG ))   = ontime;
 }
 

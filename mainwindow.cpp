@@ -103,7 +103,7 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_pushButton_6_clicked()
 {
-    if(freq <= 12000)
+    if(freq > 5000 && freq <= 12000)
     {
        freq = freq - 100;
     }
@@ -118,7 +118,7 @@ void MainWindow::on_pushButton_6_clicked()
 
 void MainWindow::on_pushButton_5_clicked()
 {
-    if(freq >= 5000)
+    if(freq >= 5000 && freq < 12000)
     {
         freq = freq + 100;
     }
