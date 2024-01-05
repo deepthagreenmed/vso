@@ -28,10 +28,11 @@ public:
     QPushButton *inc_freq_btn;
     QPushButton *dec_freq_btn;
 
-    QLineEdit *lineEdit, *lineEdit_2;
+    QLineEdit *lineEdit;
+    QLineEdit *lineEdit_2;
 
     double timeon = 400;                 //us
-    double freq = 8000;                 //Hz
+    double freq = 8000;                  //Hz
 
 
 public slots:
