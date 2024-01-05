@@ -26,8 +26,8 @@
 #define MAP_SIZE 4096UL
 #define MAP_MASK (MAP_SIZE - 1)
 
-#define VSO_PWM_ON_REG              44
-#define VSO_PWM_PERIOD_REG          46
+#define VSO_PWM_ON_REG              40
+#define VSO_PWM_PERIOD_REG          42
 
 #define VSO_ON_MASK	               0x01
 #define VSO_OFF_MASK               0x00

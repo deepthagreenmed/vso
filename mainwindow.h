@@ -30,7 +30,7 @@ public:
 
     QLineEdit *lineEdit, *lineEdit_2;
 
-    double timeon = 10;                 //us
+    double timeon = 400;                 //us
     double freq = 8000;                 //Hz
 
 

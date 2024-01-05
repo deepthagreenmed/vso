@@ -46,6 +46,9 @@ MainWindow::MainWindow(QWidget *parent)
     lineEdit->clearFocus();
     lineEdit_2->clearFocus();
 
+    h.vso_ontime(timeon);
+    h.vso_period(((1 / freq) / 0.000000005));
+
 }
 
 MainWindow::~MainWindow()
@@ -72,7 +75,6 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 
     }
 
-
     return false;
 
 }
@@ -82,10 +84,10 @@ void MainWindow::on_pushButton_clicked()
     timeon=timeon+10;
 
     h.vso_ontime(timeon);
-    h.vso_period(1000000/freq);
+    h.vso_period(((1 / freq) / 0.000000005));
 
     lineEdit->setText(QString::number(timeon));
-    lineEdit_2->setText(QString::number(1000000/freq));
+    lineEdit_2->setText(QString::number(freq));
 
 }
 
@@ -94,7 +96,7 @@ void MainWindow::on_pushButton_2_clicked()
     timeon=timeon-10;
 
     h.vso_ontime(timeon);
-    h.vso_period(1000000/freq);
+    h.vso_period(((1 / freq) / 0.000000005));
 
     lineEdit->setText(QString::number(timeon));
     lineEdit_2->setText(QString::number(freq));
@@ -103,13 +105,10 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_pushButton_6_clicked()
 {
-    if(freq > 5000 && freq <= 12000)
-    {
-       freq = freq - 100;
-    }
+    freq = freq - 100;
 
     h.vso_ontime(timeon);
-    h.vso_period(1000000/freq);
+    h.vso_period(((1 / freq) / 0.000000005));
 
     lineEdit->setText(QString::number(timeon));
     lineEdit_2->setText(QString::number(freq));
@@ -118,13 +117,10 @@ void MainWindow::on_pushButton_6_clicked()
 
 void MainWindow::on_pushButton_5_clicked()
 {
-    if(freq >= 5000 && freq < 12000)
-    {
-        freq = freq + 100;
-    }
+    freq = freq + 100;
 
     h.vso_ontime(timeon);
-    h.vso_period(1000000/freq);
+    h.vso_period(((1 / freq) / 0.000000005));
 
     lineEdit->setText(QString::number(timeon));
     lineEdit_2->setText(QString::number(freq));
@@ -205,7 +201,7 @@ void MainWindow::on_clickedenter()
     lineEdit_2->clearFocus();
 
     h.vso_ontime(timeon);
-    h.vso_period(1000000/freq);
+    h.vso_period(((1 / freq) / 0.000000005));
 
     lineEdit->setText(QString::number(timeon));
     lineEdit_2->setText(QString::number(freq));

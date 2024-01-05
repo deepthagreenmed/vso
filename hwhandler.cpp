@@ -29,7 +29,7 @@ void hwHandler::vso_ontime(double ontime)
 {
     qDebug()<<ontime;
 
-    *((uint8_t *) (mapped_dev_base  + VSO_PWM_ON_REG ))   = ontime;
+    *((uint16_t *) (mapped_dev_base  + VSO_PWM_ON_REG ))   = (uint16_t)(ontime);
 }
 
 void hwHandler::vso_period(double count)
