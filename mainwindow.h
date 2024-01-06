@@ -31,8 +31,12 @@ public:
     QLineEdit *lineEdit;
     QLineEdit *lineEdit_2;
 
-    double timeon = 400;                 //us
-    double freq = 8000;                  //Hz
+    double timeon = 10;
+    double freq = 8000;
+
+    double period;
+
+    QLabel *label;
 
 
 public slots:

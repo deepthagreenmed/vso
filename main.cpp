@@ -76,6 +76,7 @@ int main(int argc, char **argv) {
 
     layout2->addWidget(window.lineEdit);
     layout2->addWidget(window.lineEdit_2);
+    layout2->addWidget(window.label);
 
     QWidget *subWidget = new QWidget;
     subWidget->setLayout(layout2);

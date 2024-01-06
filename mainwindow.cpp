@@ -45,8 +45,16 @@ MainWindow::MainWindow(QWidget *parent)
     lineEdit->clearFocus();
     lineEdit_2->clearFocus();
 
-    h.vso_ontime(timeon);
+    h.vso_ontime(((timeon / (100*freq)) / 0.000000005));
     h.vso_period(((1 / freq) / 0.000000005));
+   // h.vso_ontime(400);
+   // h.vso_period(20000);
+
+    period = 1/freq * 1000000;
+    label = new QLabel(QString::number(period));
+    QPalette palette3 = label->palette();
+    palette3.setColor(QPalette::WindowText, Qt::blue);
+    label->setPalette(palette3);
 
 }
 
@@ -80,9 +88,9 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 
 void MainWindow::on_pushButton_clicked()
 {
-    timeon=timeon+10;
+    timeon=timeon+5;
 
-    h.vso_ontime(timeon);
+    h.vso_ontime(((timeon / (100*freq)) / 0.000000005));
     h.vso_period(((1 / freq) / 0.000000005));
 
     lineEdit->setText(QString::number(timeon));
@@ -92,13 +100,16 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    timeon=timeon-10;
+    timeon=timeon-5;
 
-    h.vso_ontime(timeon);
+    h.vso_ontime(((timeon / (100*freq)) / 0.000000005));
     h.vso_period(((1 / freq) / 0.000000005));
 
     lineEdit->setText(QString::number(timeon));
     lineEdit_2->setText(QString::number(freq));
+
+    period = 1/freq * 1000000;
+    label->setText(QString::number(period));
 
 }
 
@@ -106,11 +117,14 @@ void MainWindow::on_pushButton_6_clicked()
 {
     freq = freq - 100;
 
-    h.vso_ontime(timeon);
+    h.vso_ontime(((timeon / (100*freq)) / 0.000000005));
     h.vso_period(((1 / freq) / 0.000000005));
 
     lineEdit->setText(QString::number(timeon));
     lineEdit_2->setText(QString::number(freq));
+
+    period = 1/freq * 1000000;
+    label->setText(QString::number(period));
 
 }
 
@@ -118,11 +132,14 @@ void MainWindow::on_pushButton_5_clicked()
 {
     freq = freq + 100;
 
-    h.vso_ontime(timeon);
+    h.vso_ontime(((timeon / (100*freq)) / 0.000000005));
     h.vso_period(((1 / freq) / 0.000000005));
 
     lineEdit->setText(QString::number(timeon));
     lineEdit_2->setText(QString::number(freq));
+
+    period = 1/freq * 1000000;
+    label->setText(QString::number(period));
 
 }
 
@@ -159,6 +176,9 @@ void MainWindow::on_clicked(const QString& digit)
     lineEdit->setText(QString::number(timeon));
     lineEdit_2->setText(QString::number(freq));
 
+    period = 1/freq * 1000000;
+    label->setText(QString::number(period));
+
 }
 
 void MainWindow::on_clickedbackspace()
@@ -190,6 +210,9 @@ void MainWindow::on_clickedbackspace()
     lineEdit->setText(QString::number(timeon));
     lineEdit_2->setText(QString::number(freq));
 
+    period = 1/freq * 1000000;
+    label->setText(QString::number(period));
+
 }
 
 void MainWindow::on_clickedenter()
@@ -199,11 +222,14 @@ void MainWindow::on_clickedenter()
     lineEdit->clearFocus();
     lineEdit_2->clearFocus();
 
-    h.vso_ontime(timeon);
+    h.vso_ontime(((timeon / (100*freq)) / 0.000000005));
     h.vso_period(((1 / freq) / 0.000000005));
 
     lineEdit->setText(QString::number(timeon));
     lineEdit_2->setText(QString::number(freq));
+
+    period = 1/freq * 1000000;
+    label->setText(QString::number(period));
 
 
 }
