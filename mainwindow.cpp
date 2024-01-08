@@ -9,11 +9,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     key = new keypad;
 
-    inc_ontime_btn = new QPushButton("increase on time", this);
+    inc_ontime_btn = new QPushButton("increase duty cycle", this);
     inc_ontime_btn->setStyleSheet("QPushButton {background-color: red; color: white; }");
     connect(inc_ontime_btn, &QPushButton::clicked, this, &MainWindow::on_pushButton_clicked);
 
-    dec_ontime_btn = new QPushButton("decrease on time", this);
+    dec_ontime_btn = new QPushButton("decrease duty cycle", this);
     dec_ontime_btn->setStyleSheet("QPushButton {background-color: red; color: white; }");
     connect(dec_ontime_btn, &QPushButton::clicked, this, &MainWindow::on_pushButton_2_clicked);
 
@@ -45,8 +45,8 @@ MainWindow::MainWindow(QWidget *parent)
     lineEdit->clearFocus();
     lineEdit_2->clearFocus();
 
-    h.vso_ontime(((timeon / (100*freq)) / 0.000000005));
-    h.vso_period(((1 / freq) / 0.000000005));
+    h.vso_ontime(((timeon / (100*freq)) / resolution));
+    h.vso_period(((1 / freq) / resolution));
    // h.vso_ontime(400);
    // h.vso_period(20000);
 
@@ -90,8 +90,8 @@ void MainWindow::on_pushButton_clicked()
 {
     timeon=timeon+5;
 
-    h.vso_ontime(((timeon / (100*freq)) / 0.000000005));
-    h.vso_period(((1 / freq) / 0.000000005));
+    h.vso_ontime(((timeon / (100*freq)) / resolution));
+    h.vso_period(((1 / freq) / resolution));
 
     lineEdit->setText(QString::number(timeon));
     lineEdit_2->setText(QString::number(freq));
@@ -102,8 +102,8 @@ void MainWindow::on_pushButton_2_clicked()
 {
     timeon=timeon-5;
 
-    h.vso_ontime(((timeon / (100*freq)) / 0.000000005));
-    h.vso_period(((1 / freq) / 0.000000005));
+    h.vso_ontime(((timeon / (100*freq)) / resolution));
+    h.vso_period(((1 / freq) / resolution));
 
     lineEdit->setText(QString::number(timeon));
     lineEdit_2->setText(QString::number(freq));
@@ -117,8 +117,8 @@ void MainWindow::on_pushButton_6_clicked()
 {
     freq = freq - 100;
 
-    h.vso_ontime(((timeon / (100*freq)) / 0.000000005));
-    h.vso_period(((1 / freq) / 0.000000005));
+    h.vso_ontime(((timeon / (100*freq)) / resolution));
+    h.vso_period(((1 / freq) / resolution));
 
     lineEdit->setText(QString::number(timeon));
     lineEdit_2->setText(QString::number(freq));
@@ -132,8 +132,8 @@ void MainWindow::on_pushButton_5_clicked()
 {
     freq = freq + 100;
 
-    h.vso_ontime(((timeon / (100*freq)) / 0.000000005));
-    h.vso_period(((1 / freq) / 0.000000005));
+    h.vso_ontime(((timeon / (100*freq)) / resolution));
+    h.vso_period(((1 / freq) / resolution));
 
     lineEdit->setText(QString::number(timeon));
     lineEdit_2->setText(QString::number(freq));
@@ -222,8 +222,8 @@ void MainWindow::on_clickedenter()
     lineEdit->clearFocus();
     lineEdit_2->clearFocus();
 
-    h.vso_ontime(((timeon / (100*freq)) / 0.000000005));
-    h.vso_period(((1 / freq) / 0.000000005));
+    h.vso_ontime(((timeon / (100*freq)) / resolution));
+    h.vso_period(((1 / freq) / resolution));
 
     lineEdit->setText(QString::number(timeon));
     lineEdit_2->setText(QString::number(freq));

@@ -106,6 +106,7 @@ double PlotUpdater::convert()
 
     sample = (uint16_t)(((rx[0] & 0x3F) << 8) + rx[1]);
     float pressure = 1.0 * ((sample - OUTPUT_MIN) * (PRESSURE_MAX - PRESSURE_MIN) / (OUTPUT_MAX - OUTPUT_MIN) + PRESSURE_MIN);
+    qDebug()<<pressure;
 
     return pressure;
 }

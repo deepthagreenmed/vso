@@ -59,6 +59,7 @@ private:
     hwHandler h;
     keypad *key;
     bool flag = false;
+    double resolution = 0.000000005;
 
 
 };
