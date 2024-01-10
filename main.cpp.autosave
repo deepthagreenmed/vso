@@ -92,7 +92,7 @@ int main(int argc, char **argv) {
     // Redraw the plot with the updated axis limits
     plot->replot();
 
-
+    
     // Set up the main window
     mainWindow.setCentralWidget(centralWidget);
     mainWindow.setGeometry(100, 100, 800, 600);
