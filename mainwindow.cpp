@@ -193,7 +193,6 @@ void MainWindow::on_clickedbackspace()
         lineEdit->setText(data);
 
 
-
     }
     if(lineEdit_2->focusWidget())
     {

@@ -38,7 +38,7 @@ PlotUpdater::PlotUpdater(QwtPlotCurve *curve, QwtPlot *plot) : curve(curve), plo
     // Create a timer to update the plot every 1000 milliseconds
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updatePlot()));
-    timer->start(1000); // milliseconds
+    timer->start(10); // milliseconds
 }
 
 PlotUpdater::~PlotUpdater()
