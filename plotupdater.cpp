@@ -18,7 +18,6 @@
 #define OUTPUT_MIN 0
 #define OUTPUT_MAX 16383
 #define PRESSURE_MIN -1       // min is 0 for sensors that give absolute values
-//#define PRESSURE_MAX 206842.7   // 30psi (and we want results in pascals)
 #define PRESSURE_MAX 15 // in psi
 
 PlotUpdater::PlotUpdater(QwtPlotCurve *curve, QwtPlot *plot) : curve(curve), plot(plot) {
