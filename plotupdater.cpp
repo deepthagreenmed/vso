@@ -50,8 +50,8 @@ void PlotUpdater::updatePlot() {
     const int numPoints = 10000;
     QVector<double> xData(numPoints);
     QVector<double> yData(numPoints);
-    QVector<double> x(numPoints/250);
-    QVector<double> y(numPoints/250);
+    QVector<double> x(numPoints/25);
+    QVector<double> y(numPoints/25);
 
     for (int i = 0; i < numPoints; ++i) {
         xData[i] = i;
@@ -63,13 +63,13 @@ void PlotUpdater::updatePlot() {
     {
         int xsum=0;
         int ysum=0;
-        for(int i=j; i<(j+250); i++)
+        for(int i=j; i<(j+25); i++)
         {
             xsum += xData[i];
             ysum += yData[i];
         }
-        x[j/250] = xsum/250;
-        y[j/250] = ysum/250;
+        x[j/25] = xsum/25;
+        y[j/25] = ysum/25;
         //qDebug() << x[j/25] << " " << y[j/25];
 
     }

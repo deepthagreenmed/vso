@@ -9,6 +9,73 @@ MainWindow::MainWindow(QWidget *parent)
 
     key = new keypad;
 
+    layout = new QVBoxLayout;
+
+    plot = new QwtPlot;
+    plot2 = new QwtPlot;
+
+    QwtPlotCanvas *canvas = new QwtPlotCanvas();
+    canvas->setPalette(Qt::white);
+    plot->setCanvas(canvas);
+    plot2->setCanvas(canvas);
+
+    layout->addWidget(plot);
+    layout->addWidget(plot2);
+//    layout->addWidget(key);
+
+    curve = new QwtPlotCurve("Pressure Graph");
+
+    QColor color(Qt::green);
+    curve->setStyle(QwtPlotCurve::Lines);
+    curve->setPen(QPen(color, 2));
+
+    curve->attach(plot);
+
+    curve2 = new QwtPlotCurve("Vaccum Graph");
+
+    curve2->setStyle(QwtPlotCurve::Lines);
+    curve2->setPen(QPen(color, 2));
+
+    curve2->attach(plot2);
+
+
+    // Set the range and scale of the x-axis
+    plot->setAxisScale(QwtPlot::xBottom, 0, 10000, 50);
+
+    // Set the range and scale of the y-axis
+    plot->setAxisScale(QwtPlot::yLeft, 0, 20, 1);
+
+    // Redraw the plot with the updated axis limits
+    plot->replot();
+
+    // Set the range and scale of the x-axis
+    plot2->setAxisScale(QwtPlot::xBottom, 0, 1000, 50);
+
+    // Set the range and scale of the y-axis
+    plot2->setAxisScale(QwtPlot::yLeft, 0, 500, 10);
+
+    // Redraw the plot with the updated axis limits
+    plot2->replot();
+
+    QwtPlot::Axis axis = QwtPlot::xBottom;
+    QwtScaleWidget *sw = plot->axisWidget(axis);
+    sw->setPalette(Qt::green);
+
+    QwtPlot::Axis axis2 = QwtPlot::yLeft;
+    QwtScaleWidget *sw2 = plot->axisWidget(axis2);
+    sw2->setPalette(Qt::green);
+    \
+    QwtScaleWidget *sw3 = plot2->axisWidget(axis);
+    sw3->setPalette(Qt::green);
+
+    QwtScaleWidget *sw4 = plot2->axisWidget(axis2);
+    sw4->setPalette(Qt::green);
+
+
+//    // Create an object to handle dynamic updates of the plot
+//    PlotUpdater plotUpdater(curve, plot);
+//    PlotUpdater2 plotUpdater2(curve2, plot2);
+
     inc_ontime_btn = new QPushButton("increase duty cycle", this);
     inc_ontime_btn->setStyleSheet("QPushButton {background-color: red; color: white; }");
     connect(inc_ontime_btn, &QPushButton::clicked, this, &MainWindow::on_pushButton_clicked);
@@ -55,6 +122,25 @@ MainWindow::MainWindow(QWidget *parent)
     QPalette palette3 = label->palette();
     palette3.setColor(QPalette::WindowText, Qt::blue);
     label->setPalette(palette3);
+
+    layout2 = new QHBoxLayout;
+
+    // Add buttons
+    layout2->addWidget(inc_ontime_btn);
+    layout2->addWidget(dec_ontime_btn);
+    layout2->addWidget(inc_freq_btn);
+    layout2->addWidget(dec_freq_btn);
+
+    layout2->addWidget(lineEdit);
+    layout2->addWidget(lineEdit_2);
+    layout2->addWidget(label);
+
+//    QWidget *subWidget = new QWidget;
+//    subWidget->setLayout(layout2);
+//    layout->addWidget(subWidget);
+
+
+
 
 }
 
