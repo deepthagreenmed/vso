@@ -88,7 +88,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 
 void MainWindow::on_pushButton_clicked()
 {
-    timeon=timeon+5;
+    timeon = timeon + 1;
 
     h.vso_ontime(((timeon / (100*freq)) / resolution));
     h.vso_period(((1 / freq) / resolution));
@@ -100,7 +100,7 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    timeon=timeon-5;
+    timeon = timeon - 1;
 
     h.vso_ontime(((timeon / (100*freq)) / resolution));
     h.vso_period(((1 / freq) / resolution));

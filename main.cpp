@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "plotupdater.h"
 #include "keypad.h"
+#include "plotupdater2.h"
 
 #include <QApplication>
 #include <QMainWindow>
@@ -37,16 +38,19 @@ int main(int argc, char **argv) {
 
     // Create a QwtPlot widget
     QwtPlot *plot = new QwtPlot(centralWidget);
+    QwtPlot *plot2 = new QwtPlot(centralWidget);
 
     QwtPlotCanvas *canvas = new QwtPlotCanvas();
     canvas->setPalette(Qt::white);
     plot->setCanvas(canvas);
+    plot2->setCanvas(canvas);
 
-    layout->addWidget(plot);
+   //layout->addWidget(plot);
+    layout->addWidget(plot2);
     layout->addWidget(key);
 
     // Create a curve to be plotted
-    QwtPlotCurve *curve = new QwtPlotCurve("VSO Graph");
+    QwtPlotCurve *curve = new QwtPlotCurve("Pressure Graph");
 
     QColor color(Qt::green);
     curve->setStyle(QwtPlotCurve::Lines);
@@ -55,6 +59,15 @@ int main(int argc, char **argv) {
     // Attach the curve to the plot
     curve->attach(plot);
 
+    // Create a curve to be plotted
+    QwtPlotCurve *curve2 = new QwtPlotCurve("Vaccum Graph");
+
+    curve2->setStyle(QwtPlotCurve::Lines);
+    curve2->setPen(QPen(color, 2));
+
+    // Attach the curve to the plot
+    curve2->attach(plot2);
+
     QwtPlot::Axis axis = QwtPlot::xBottom;
     QwtScaleWidget *sw = plot->axisWidget(axis);
     sw->setPalette(Qt::green);
@@ -62,9 +75,17 @@ int main(int argc, char **argv) {
     QwtPlot::Axis axis2 = QwtPlot::yLeft;
     QwtScaleWidget *sw2 = plot->axisWidget(axis2);
     sw2->setPalette(Qt::green);
+    \
+    QwtScaleWidget *sw3 = plot2->axisWidget(axis);
+    sw3->setPalette(Qt::green);
+
+    QwtScaleWidget *sw4 = plot2->axisWidget(axis2);
+    sw4->setPalette(Qt::green);
+
 
     // Create an object to handle dynamic updates of the plot
     PlotUpdater plotUpdater(curve, plot);
+    PlotUpdater2 plotUpdater2(curve2, plot2);
 
     QHBoxLayout *layout2 = new QHBoxLayout;
 
@@ -91,6 +112,15 @@ int main(int argc, char **argv) {
 
     // Redraw the plot with the updated axis limits
     plot->replot();
+
+    // Set the range and scale of the x-axis
+    plot2->setAxisScale(QwtPlot::xBottom, 0, 100, 50);
+
+    // Set the range and scale of the y-axis
+    plot2->setAxisScale(QwtPlot::yLeft, 0, 500, 10);
+
+    // Redraw the plot with the updated axis limits
+    plot2->replot();
 
     
     // Set up the main window

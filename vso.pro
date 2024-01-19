@@ -25,13 +25,15 @@ SOURCES += \
     keypad.cpp \
     main.cpp \
     mainwindow.cpp \
-    plotupdater.cpp
+    plotupdater.cpp \
+    plotupdater2.cpp
 
 HEADERS += \
     hwhandler.h \
     keypad.h \
     mainwindow.h \
-    plotupdater.h
+    plotupdater.h \
+    plotupdater2.h
 
 FORMS += \
     keypad.ui \
