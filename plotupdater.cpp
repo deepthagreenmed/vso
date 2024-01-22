@@ -59,7 +59,7 @@ void PlotUpdater::updatePlot() {
         //qDebug() << xData[i] << " " << yData[i];
     }
 
-    for(int j=0; j<numPoints; j+=250)
+    for(int j=0; j<numPoints; j+=25)
     {
         int xsum=0;
         int ysum=0;
@@ -103,7 +103,7 @@ double PlotUpdater::convert()
     ioctl(spi_fd, SPI_IOC_MESSAGE(1), &tr);
     //qDebug()<<rx[0]<<rx[1];
 
-    sample = (uint16_t)(((rx[0] & 0x0F) << 8) + rx[1]);
+    sample = (uint16_t)(((rx[1] & 0xF0) << 8) | rx[0]);
     float pressure = ((sample - OUTPUT_MIN) * (PRESSURE_MAX - PRESSURE_MIN) / (OUTPUT_MAX - OUTPUT_MIN) + PRESSURE_MIN);
     //qDebug()<<"Pressure"<<sample;
 

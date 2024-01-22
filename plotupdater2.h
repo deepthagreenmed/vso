@@ -15,7 +15,7 @@ public:
     ~PlotUpdater2();
     double convert();
 
-private slots:
+public slots:
     void updatePlot();
 
 private:

@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     // Set the range and scale of the x-axis
-    plot->setAxisScale(QwtPlot::xBottom, 0, 10000, 50);
+    plot->setAxisScale(QwtPlot::xBottom, 0, 1000, 50);
 
     // Set the range and scale of the y-axis
     plot->setAxisScale(QwtPlot::yLeft, 0, 20, 1);
@@ -174,7 +174,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 
 void MainWindow::on_pushButton_clicked()
 {
-    timeon = timeon + 1;
+    timeon = timeon + 0.1;
 
     h.vso_ontime(((timeon / (100*freq)) / resolution));
     h.vso_period(((1 / freq) / resolution));
@@ -186,7 +186,7 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    timeon = timeon - 1;
+    timeon = timeon - 0.1;
 
     h.vso_ontime(((timeon / (100*freq)) / resolution));
     h.vso_period(((1 / freq) / resolution));

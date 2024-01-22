@@ -19,9 +19,25 @@ int main(int argc, char **argv) {
     gridLayout.addLayout(window.layout, 0, 0);
     gridLayout.addLayout(window.layout2, 1, 0);
 
-    // Create an object to handle dynamic updates of the plot
-    PlotUpdater plotUpdater(window.curve, window.plot);
-    PlotUpdater2 plotUpdater2(window.curve2, window.plot2);
+    // Create a separate thread for handling plot updates
+    QThread* updateThread = new QThread();
+    PlotUpdater* p = new PlotUpdater(window.curve, window.plot);
+    PlotUpdater2* p2 = new PlotUpdater2(window.curve2, window.plot2);
+
+    // Move the plot updater object to the update thread
+    p->moveToThread(updateThread);
+    p2->moveToThread(updateThread);
+
+    // Start the update thread
+    updateThread->start();
+
+    // Clean up the thread and plot updater object when done
+//    updateThread->quit();
+//    updateThread->wait();
+
+//    delete p;
+//    delete p2;
+
 
     // Set the QGridLayout as the layout for the main window
     mainWindow.setLayout(&gridLayout);

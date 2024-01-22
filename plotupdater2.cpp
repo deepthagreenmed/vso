@@ -98,10 +98,11 @@ double PlotUpdater2::convert()
     ioctl(spi_fd, SPI_IOC_MESSAGE(1), &tr);
     //qDebug()<<rx[0]<<rx[1];
 
-    sample = (uint16_t)(((rx[0] & 0x0F) << 8) + rx[1]);
+    sample = (uint16_t)(((rx[1] & 0xF0) << 8) | rx[0]);
+    //qDebug()<<rx[0]<<rx[1];
     //float pressure = (sample * 500) / 4096;
-    float pressure = sample * 0.1894;
-    qDebug()<<"Vaccum"<<sample<<pressure;
+    float pressure = sample * 0.02430;
+    qDebug()<<"Vaccum"<<pressure;
     //qDebug()<<sample;
 
     return pressure;
