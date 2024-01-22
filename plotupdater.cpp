@@ -34,6 +34,7 @@ PlotUpdater::PlotUpdater(QwtPlotCurve *curve, QwtPlot *plot) : curve(curve), plo
     ioctl(spi_fd, SPI_IOC_WR_MAX_SPEED_HZ, &speed);
     ioctl(spi_fd, SPI_IOC_RD_MAX_SPEED_HZ, &speed);
 
+
     // Create a timer to update the plot every 1000 milliseconds
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updatePlot()));
@@ -74,11 +75,15 @@ void PlotUpdater::updatePlot() {
 
     }
 
+
     // Set new data for the curve
     curve->setSamples(x, y);
 
     // Replot the plot
     plot->replot();
+
+
+
 }
 
 double PlotUpdater::convert()

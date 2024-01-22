@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QVector>
+#include <QLabel>
 
 #include <qwt_plot.h>
 #include <qwt_plot_curve.h>
@@ -14,6 +15,7 @@ public:
     PlotUpdater2(QwtPlotCurve *curve, QwtPlot *plot);
     ~PlotUpdater2();
     double convert();
+    float pressure;
 
 public slots:
     void updatePlot();
@@ -23,6 +25,7 @@ private:
     QwtPlot *plot;
     QTimer *timer;
     int spi_fd;
+
 
 };
 

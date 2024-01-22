@@ -139,7 +139,17 @@ MainWindow::MainWindow(QWidget *parent)
 //    subWidget->setLayout(layout2);
 //    layout->addWidget(subWidget);
 
+//    PlotUpdater* p = new PlotUpdater(curve, plot);
+//    PlotUpdater2* p2 = new PlotUpdater2(curve2, plot2);
 
+//    QLabel *psi;
+//    psi->setText("Pressure:" + QString::number(p->pressure));
+
+//    QLabel *mmhg;
+//    mmhg->setText("Vaccum:" + QString::number(p2->pressure));
+
+//    layout2->addWidget(psi);
+//    layout2->addWidget(mmhg);
 
 
 }
@@ -174,7 +184,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 
 void MainWindow::on_pushButton_clicked()
 {
-    timeon = timeon + 0.1;
+    timeon = timeon + 0.025;
 
     h.vso_ontime(((timeon / (100*freq)) / resolution));
     h.vso_period(((1 / freq) / resolution));
@@ -186,7 +196,7 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    timeon = timeon - 0.1;
+    timeon = timeon - 0.025;
 
     h.vso_ontime(((timeon / (100*freq)) / resolution));
     h.vso_period(((1 / freq) / resolution));

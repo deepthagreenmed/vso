@@ -29,6 +29,10 @@ PlotUpdater2::PlotUpdater2(QwtPlotCurve *curve, QwtPlot *plot) : curve(curve), p
     ioctl(spi_fd, SPI_IOC_WR_MAX_SPEED_HZ, &speed);
     ioctl(spi_fd, SPI_IOC_RD_MAX_SPEED_HZ, &speed);
 
+
+
+
+
     // Create a timer to update the plot every 1000 milliseconds
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updatePlot()));
@@ -69,11 +73,14 @@ void PlotUpdater2::updatePlot() {
 
     }
 
+
     // Set new data for the curve
     curve->setSamples(x, y);
 
     // Replot the plot
     plot->replot();
+
+
 }
 
 double PlotUpdater2::convert()
@@ -102,7 +109,7 @@ double PlotUpdater2::convert()
     //qDebug()<<rx[0]<<rx[1];
     //float pressure = (sample * 500) / 4096;
     float pressure = sample * 0.02430;
-    qDebug()<<"Vaccum"<<pressure;
+    qDebug()<<"Vaccum"<<(int)pressure;
     //qDebug()<<sample;
 
     return pressure;
