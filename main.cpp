@@ -26,11 +26,9 @@ int main(int argc, char **argv) {
 
     QLabel psi;
     psi.setText("Pressure:" + QString::number(p->pressure));
-    psi.show();
 
     QLabel mmhg;
     mmhg.setText("Vaccum:" + QString::number(p2->pressure));
-    mmhg.show();
 
     QHBoxLayout *layout3 = new QHBoxLayout;
     layout3->addWidget(&psi);

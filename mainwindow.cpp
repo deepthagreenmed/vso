@@ -139,19 +139,6 @@ MainWindow::MainWindow(QWidget *parent)
 //    subWidget->setLayout(layout2);
 //    layout->addWidget(subWidget);
 
-//    PlotUpdater* p = new PlotUpdater(curve, plot);
-//    PlotUpdater2* p2 = new PlotUpdater2(curve2, plot2);
-
-//    QLabel *psi;
-//    psi->setText("Pressure:" + QString::number(p->pressure));
-
-//    QLabel *mmhg;
-//    mmhg->setText("Vaccum:" + QString::number(p2->pressure));
-
-//    layout2->addWidget(psi);
-//    layout2->addWidget(mmhg);
-
-
 }
 
 MainWindow::~MainWindow()

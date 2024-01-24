@@ -38,7 +38,7 @@ PlotUpdater::PlotUpdater(QwtPlotCurve *curve, QwtPlot *plot) : curve(curve), plo
     // Create a timer to update the plot every 1000 milliseconds
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updatePlot()));
-    timer->start(1); // milliseconds
+    timer->start(1000); // milliseconds
 }
 
 PlotUpdater::~PlotUpdater()
@@ -60,24 +60,24 @@ void PlotUpdater::updatePlot() {
         //qDebug() << xData[i] << " " << yData[i];
     }
 
-    for(int j=0; j<numPoints; j+=25)
-    {
-        int xsum=0;
-        int ysum=0;
-        for(int i=j; i<(j+25); i++)
-        {
-            xsum += xData[i];
-            ysum += yData[i];
-        }
-        x[j/25] = xsum/25;
-        y[j/25] = ysum/25;
-        //qDebug() << x[j/25] << " " << y[j/25];
+//    for(int j=0; j<numPoints; j+=25)
+//    {
+//        int xsum=0;
+//        int ysum=0;
+//        for(int i=j; i<(j+25); i++)
+//        {
+//            xsum += xData[i];
+//            ysum += yData[i];
+//        }
+//        x[j/25] = xsum/25;
+//        y[j/25] = ysum/25;
+//        //qDebug() << x[j/25] << " " << y[j/25];
 
-    }
+//    }
 
 
     // Set new data for the curve
-    curve->setSamples(x, y);
+    curve->setSamples(xData, yData);
 
     // Replot the plot
     plot->replot();
@@ -86,7 +86,19 @@ void PlotUpdater::updatePlot() {
 
 }
 
-double PlotUpdater::convert()
+//float PlotUpdater::stabilize()
+//{
+//    int sum = 0;
+//    for(int i=0; i<1000; i++)
+//    {
+//        sum += (int)convert();
+//    }
+//   // qDebug()<<"Pressure"<<sum/1000;
+//    return sum/1000;
+
+//}
+
+float PlotUpdater::convert()
 {
     uint8_t tx[2] = {0xA7, 0x00};
     uint8_t rx[2] = {0x00, 0x00};
@@ -108,7 +120,7 @@ double PlotUpdater::convert()
     ioctl(spi_fd, SPI_IOC_MESSAGE(1), &tr);
     //qDebug()<<rx[0]<<rx[1];
 
-    sample = (uint16_t)(((rx[1] & 0xF0) << 8) | rx[0]);
+    sample = (uint16_t)(((rx[1] & 0xF0) << 4) | rx[0]);
     float pressure = ((sample - OUTPUT_MIN) * (PRESSURE_MAX - PRESSURE_MIN) / (OUTPUT_MAX - OUTPUT_MIN) + PRESSURE_MIN);
     //qDebug()<<"Pressure"<<sample;
 

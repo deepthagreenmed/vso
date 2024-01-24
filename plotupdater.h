@@ -14,8 +14,9 @@ class PlotUpdater : public QObject
 public:
     PlotUpdater(QwtPlotCurve *curve, QwtPlot *plot);
     ~PlotUpdater();
-    double convert();
+    float convert();
     float pressure;
+    float stabilize();
 
 public slots:
     void updatePlot();
