@@ -113,9 +113,9 @@ float PlotUpdater2::convert()
     /* send the cmd to start the conversion and read the result */
     ioctl(spi_fd, SPI_IOC_MESSAGE(1), &tr);
     //qDebug()<<rx[0]<<rx[1];
-    rx[1] = 0x10;
-    rx[0] = 0x00;
-    sample = (uint16_t)((rx[1] & 0x0F) | rx[0]);
+    rx[1] = 0x1F;
+    rx[0] = 0xFF;
+    sample = (uint16_t)((rx[1] & 0x0F) << 8) | rx[0];
     //qDebug()<<rx[0]<<rx[1];
     //float pressure = (sample * 500) / 4096;
    // float pressure = sample * 0.351;
