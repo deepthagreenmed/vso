@@ -17,6 +17,16 @@
 
 PlotUpdater2::PlotUpdater2(QwtPlotCurve *curve, QwtPlot *plot) : curve(curve), plot(plot) {
 
+    initSPI();
+
+    // Create a timer to update the plot every 1000 milliseconds
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(updatePlot()));
+    timer->start(30); // milliseconds
+}
+
+void PlotUpdater2::initSPI()
+{
     spi_fd = open("/dev/spidev2.0", O_RDWR);
 
     int mode;
@@ -28,12 +38,6 @@ PlotUpdater2::PlotUpdater2(QwtPlotCurve *curve, QwtPlot *plot) : curve(curve), p
     ioctl(spi_fd, SPI_IOC_RD_BITS_PER_WORD, &bits);
     ioctl(spi_fd, SPI_IOC_WR_MAX_SPEED_HZ, &speed);
     ioctl(spi_fd, SPI_IOC_RD_MAX_SPEED_HZ, &speed);
-
-
-    // Create a timer to update the plot every 1000 milliseconds
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(updatePlot()));
-    timer->start(1000); // milliseconds
 }
 
 PlotUpdater2::~PlotUpdater2()
@@ -46,29 +50,12 @@ void PlotUpdater2::updatePlot() {
     const int numPoints = 10000;
     QVector<double> xData(numPoints);
     QVector<double> yData(numPoints);
-//    QVector<double> x(numPoints/10);
-//    QVector<double> y(numPoints/10);
 
     for (int i = 0; i < numPoints; ++i) {
         xData[i] = i;
         yData[i] = stabilize();
         //qDebug() << xData[i] << " " << yData[i];
     }
-
-//    for(int j=0; j<numPoints; j+=10)
-//    {
-//        int xsum=0;
-//        int ysum=0;
-//        for(int i=j; i<(j+10); i++)
-//        {
-//            xsum += xData[i];
-//            ysum += yData[i];
-//        }
-//        x[j/10] = xsum/10;
-//        y[j/10] = ysum/10;
-//        //qDebug() << x[j/25] << " " << y[j/25];
-
-//    }
 
 
     // Set new data for the curve
@@ -80,23 +67,23 @@ void PlotUpdater2::updatePlot() {
 
 }
 
-float PlotUpdater2::stabilize()
+int PlotUpdater2::stabilize()
 {
     int sum = 0;
     for(int i=0; i<1000; i++)
     {
-        sum += (int)convert();
+        sum += (int)convert(0xD7);
     }
     qDebug()<<"Vaccum"<<sum/1000;
     return sum/1000;
 
 }
 
-float PlotUpdater2::convert()
+int PlotUpdater2::convert(uint8_t channel)
 {
-    uint8_t tx[2] = {0xD7, 0x00};
-    uint8_t rx[2] = {0x00, 0x00};
-    int sample = 0;
+    uint8_t tx[3] = {channel, 0x00, 0x00};
+    uint8_t rx[3] = {0x00, 0x00, 0x00};
+    uint16_t sample = 0;
     uint16_t delay = 0;
     uint8_t bits = 8;
     uint32_t speed = 1000000;
@@ -112,15 +99,10 @@ float PlotUpdater2::convert()
 
     /* send the cmd to start the conversion and read the result */
     ioctl(spi_fd, SPI_IOC_MESSAGE(1), &tr);
-    //qDebug()<<rx[0]<<rx[1];
-    rx[1] = 0x10;
-    rx[0] = 0x00;
-    sample = (uint16_t)((rx[1] & 0x0F) | rx[0]);
-    //qDebug()<<rx[0]<<rx[1];
-    //float pressure = (sample * 500) / 4096;
-   // float pressure = sample * 0.351;
-    //qDebug()<<"Vaccum"<<(int)pressure;
-    //qDebug()<<sample;
+
+    sample =  (rx[2] + (rx[1] << 8)) >> 3;
+
+    pressure = sample * 0.1894;
 
     return sample;
 }
