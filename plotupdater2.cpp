@@ -99,10 +99,22 @@ int PlotUpdater2::convert(uint8_t channel)
 
     /* send the cmd to start the conversion and read the result */
     ioctl(spi_fd, SPI_IOC_MESSAGE(1), &tr);
+<<<<<<< HEAD
 
     sample =  (rx[2] + (rx[1] << 8)) >> 3;
 
     pressure = sample * 0.1894;
+=======
+    //qDebug()<<rx[0]<<rx[1];
+    rx[1] = 0x1F;
+    rx[0] = 0xFF;
+    sample = (uint16_t)((rx[1] & 0x0F) << 8) | rx[0];
+    //qDebug()<<rx[0]<<rx[1];
+    //float pressure = (sample * 500) / 4096;
+   // float pressure = sample * 0.351;
+    //qDebug()<<"Vaccum"<<(int)pressure;
+    //qDebug()<<sample;
+>>>>>>> 33646f923fe716eac674f2eb293435556ae86fa6
 
     return sample;
 }
