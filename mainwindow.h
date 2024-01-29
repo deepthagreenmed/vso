@@ -14,16 +14,6 @@
 #include <QGridLayout>
 #include <QTimer>
 #include <QObject>
-#include <QwtScaleWidget>
-
-#include <qwt_plot.h>
-#include <qwt_plot_curve.h>
-#include <qwt_scale_draw.h>
-#include <qwt_plot_canvas.h>
-#include <qwt_plot_grid.h>
-#include <qwt_symbol.h>
-#include <qwt_legend.h>
-
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -55,8 +45,8 @@ public:
 
     QLabel *label;
 
-    QwtPlot *plot, *plot2;
-    QwtPlotCurve *curve, *curve2;
+//    QwtPlot *plot, *plot2;
+//    QwtPlotCurve *curve, *curve2;
 
     QVBoxLayout *layout;
     QHBoxLayout *layout2;

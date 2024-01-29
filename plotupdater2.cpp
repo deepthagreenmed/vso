@@ -15,14 +15,17 @@
 #include <vector>
 #include <iostream>
 
-PlotUpdater2::PlotUpdater2(QwtPlotCurve *curve, QwtPlot *plot) : curve(curve), plot(plot) {
+PlotUpdater2::PlotUpdater2() {
 
     initSPI();
 
+    int avg = stabilize();
+    qDebug()<<avg;
+
     // Create a timer to update the plot every 1000 milliseconds
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(updatePlot()));
-    timer->start(30); // milliseconds
+//    timer = new QTimer(this);
+//    connect(timer, SIGNAL(timeout()), this, SLOT(updatePlot()));
+//    timer->start(30); // milliseconds
 }
 
 void PlotUpdater2::initSPI()
@@ -45,27 +48,27 @@ PlotUpdater2::~PlotUpdater2()
     close(spi_fd);
 }
 
-void PlotUpdater2::updatePlot() {
-    // Update curve data
-    const int numPoints = 10000;
-    QVector<double> xData(numPoints);
-    QVector<double> yData(numPoints);
+//void PlotUpdater2::updatePlot() {
+//    // Update curve data
+//    const int numPoints = 10000;
+//    QVector<double> xData(numPoints);
+//    QVector<double> yData(numPoints);
 
-    for (int i = 0; i < numPoints; ++i) {
-        xData[i] = i;
-        yData[i] = stabilize();
-        //qDebug() << xData[i] << " " << yData[i];
-    }
-
-
-    // Set new data for the curve
-    curve->setSamples(xData, yData);
-
-    // Replot the plot
-    plot->replot();
+//    for (int i = 0; i < numPoints; ++i) {
+//        xData[i] = i;
+//        yData[i] = stabilize();
+//        //qDebug() << xData[i] << " " << yData[i];
+//    }
 
 
-}
+//    // Set new data for the curve
+//    curve->setSamples(xData, yData);
+
+//    // Replot the plot
+//    plot->replot();
+
+
+//}
 
 int PlotUpdater2::stabilize()
 {

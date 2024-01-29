@@ -5,9 +5,6 @@
 #include <QVector>
 #include <QLabel>
 
-#include <qwt_plot.h>
-#include <qwt_plot_curve.h>
-
 
 #define OUTPUT_MIN 0
 #define OUTPUT_MAX 4095
@@ -18,7 +15,7 @@ class PlotUpdater : public QObject
 {
     Q_OBJECT
 public:
-    PlotUpdater(QwtPlotCurve *curve, QwtPlot *plot);
+    PlotUpdater();
     ~PlotUpdater();
     float convert(uint8_t channel);
     float pressure;
@@ -26,11 +23,11 @@ public:
     void initSPI();
 
 public slots:
-    void updatePlot();
+//    void updatePlot();
 
 private:
-    QwtPlotCurve *curve;
-    QwtPlot *plot;
+   // QwtPlotCurve *curve;
+  //  QwtPlot *plot;
     QTimer *timer;
     int spi_fd;
 

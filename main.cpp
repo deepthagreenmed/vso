@@ -12,11 +12,15 @@ int main(int argc, char **argv) {
     QWidget mainWindow;
     MainWindow window;
 
-    PlotUpdater* p = new PlotUpdater(window.curve, window.plot);
-    PlotUpdater2* p2 = new PlotUpdater2(window.curve2, window.plot2);
+//    PlotUpdater* p = new PlotUpdater(window.curve, window.plot);
+//    PlotUpdater2* p2 = new PlotUpdater2(window.curve2, window.plot2);
 
 
     // Create the QGridLayout
+
+    PlotUpdater *p;
+    PlotUpdater2 *p2;
+
     QGridLayout gridLayout;
 
 
@@ -38,16 +42,16 @@ int main(int argc, char **argv) {
 
 
     // Create a separate thread for handling plot updates
-    QThread* updateThread = new QThread();
+//    QThread* updateThread = new QThread();
 
 
 
     // Move the plot updater object to the update thread
-    p->moveToThread(updateThread);
-    p2->moveToThread(updateThread);
+//    p->moveToThread(updateThread);
+//    p2->moveToThread(updateThread);
 
     // Start the update thread
-    updateThread->start();
+//    updateThread->start();
 
     // Clean up the thread and plot updater object when done
 //    updateThread->quit();

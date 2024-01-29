@@ -5,14 +5,11 @@
 #include <QVector>
 #include <QLabel>
 
-#include <qwt_plot.h>
-#include <qwt_plot_curve.h>
-
 class PlotUpdater2 : public QObject
 {
     Q_OBJECT
 public:
-    PlotUpdater2(QwtPlotCurve *curve, QwtPlot *plot);
+    PlotUpdater2();
     ~PlotUpdater2();
     int convert(uint8_t channel);
     float pressure;
@@ -20,11 +17,11 @@ public:
     void initSPI();
 
 public slots:
-    void updatePlot();
+   // void updatePlot();
 
 private:
-    QwtPlotCurve *curve;
-    QwtPlot *plot;
+   // QwtPlotCurve *curve;
+  //  QwtPlot *plot;
     QTimer *timer;
     int spi_fd;
 
