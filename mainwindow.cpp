@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 //    layout->addWidget(plot);
 //    layout->addWidget(plot2);
-////    layout->addWidget(key);
+//    layout->addWidget(key);
 
 //    curve = new QwtPlotCurve("Pressure Graph");
 
@@ -64,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent)
 //    QwtPlot::Axis axis2 = QwtPlot::yLeft;
 //    QwtScaleWidget *sw2 = plot->axisWidget(axis2);
 //    sw2->setPalette(Qt::green);
-//    \
+//
 //    QwtScaleWidget *sw3 = plot2->axisWidget(axis);
 //    sw3->setPalette(Qt::green);
 
