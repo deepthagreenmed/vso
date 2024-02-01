@@ -52,27 +52,23 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = hwhandler.cpp \
+SOURCES       = ads7841.cpp \
+		hwhandler.cpp \
 		keypad.cpp \
 		main.cpp \
-		mainwindow.cpp \
-		plotupdater.cpp \
-		plotupdater2.cpp moc_hwhandler.cpp \
+		mainwindow.cpp moc_ads7841.cpp \
+		moc_hwhandler.cpp \
 		moc_keypad.cpp \
-		moc_mainwindow.cpp \
-		moc_plotupdater.cpp \
-		moc_plotupdater2.cpp
-OBJECTS       = hwhandler.o \
+		moc_mainwindow.cpp
+OBJECTS       = ads7841.o \
+		hwhandler.o \
 		keypad.o \
 		main.o \
 		mainwindow.o \
-		plotupdater.o \
-		plotupdater2.o \
+		moc_ads7841.o \
 		moc_hwhandler.o \
 		moc_keypad.o \
-		moc_mainwindow.o \
-		moc_plotupdater.o \
-		moc_plotupdater2.o
+		moc_mainwindow.o
 DIST          = ../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/lib/mkspecs/features/spec_pre.prf \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/lib/mkspecs/common/unix.conf \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/lib/mkspecs/common/linux.conf \
@@ -249,16 +245,14 @@ DIST          = ../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueab
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/lib/mkspecs/features/exceptions.prf \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/lib/mkspecs/features/yacc.prf \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/lib/mkspecs/features/lex.prf \
-		vso.pro hwhandler.h \
+		vso.pro ads7841.h \
+		hwhandler.h \
 		keypad.h \
-		mainwindow.h \
-		plotupdater.h \
-		plotupdater2.h hwhandler.cpp \
+		mainwindow.h ads7841.cpp \
+		hwhandler.cpp \
 		keypad.cpp \
 		main.cpp \
-		mainwindow.cpp \
-		plotupdater.cpp \
-		plotupdater2.cpp
+		mainwindow.cpp
 QMAKE_TARGET  = vso
 DESTDIR       = 
 TARGET        = vso
@@ -640,8 +634,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/lib/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents hwhandler.h keypad.h mainwindow.h plotupdater.h plotupdater2.h $(DISTDIR)/
-	$(COPY_FILE) --parents hwhandler.cpp keypad.cpp main.cpp mainwindow.cpp plotupdater.cpp plotupdater2.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ads7841.h hwhandler.h keypad.h mainwindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents ads7841.cpp hwhandler.cpp keypad.cpp main.cpp mainwindow.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents keypad.ui mainwindow.ui $(DISTDIR)/
 
 
@@ -674,9 +668,33 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/lib/mkspecs/features/data/dummy.cpp
 	arm-xilinx-linux-gnueabi-g++ -mthumb -mfpu=neon -mfloat-abi=hard -mcpu=cortex-a9 -fstack-protector-strong -O2 -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security -pipe --sysroot=/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi -g -std=gnu++11 -Wall -Wextra -dM -E -o moc_predefs.h ../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/lib/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_hwhandler.cpp moc_keypad.cpp moc_mainwindow.cpp moc_plotupdater.cpp moc_plotupdater2.cpp
+compiler_moc_header_make_all: moc_ads7841.cpp moc_hwhandler.cpp moc_keypad.cpp moc_mainwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_hwhandler.cpp moc_keypad.cpp moc_mainwindow.cpp moc_plotupdater.cpp moc_plotupdater2.cpp
+	-$(DEL_FILE) moc_ads7841.cpp moc_hwhandler.cpp moc_keypad.cpp moc_mainwindow.cpp
+moc_ads7841.cpp: ads7841.h \
+		hwhandler.h \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QThread \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qthread.h \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QDebug \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qdebug.h \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QFile \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qfile.h \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QCoreApplication \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qcoreapplication.h \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QEventLoop \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qeventloop.h \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QTime \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qdatetime.h \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QObject \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qobject.h \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QTimer \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qtimer.h \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QLabel \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qlabel.h \
+		moc_predefs.h \
+		../../xsdk-2023.1/sysroots/x86_64-petalinux-linux/usr/bin/moc
+	/home/amt-04/xsdk-2023.1/sysroots/x86_64-petalinux-linux/usr/bin/moc $(DEFINES) --include /home/amt-04/QtWorkspace/vso/moc_predefs.h -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/lib/mkspecs/linux-oe-g++ -I/home/amt-04/QtWorkspace/vso -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtGui -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/c++/12.2.0 -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/c++/12.2.0/arm-xilinx-linux-gnueabi -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/c++/12.2.0/backward -I/home/amt-04/xsdk-2023.1/sysroots/x86_64-petalinux-linux/usr/lib/arm-xilinx-linux-gnueabi/gcc/arm-xilinx-linux-gnueabi/12.2.0/include -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/lib/arm-xilinx-linux-gnueabi/12.2.0/include -I/home/amt-04/xsdk-2023.1/sysroots/x86_64-petalinux-linux/usr/lib/arm-xilinx-linux-gnueabi/gcc/arm-xilinx-linux-gnueabi/12.2.0/include-fixed -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include ads7841.h -o moc_ads7841.cpp
+
 moc_hwhandler.cpp: hwhandler.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QThread \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qthread.h \
@@ -722,14 +740,13 @@ moc_mainwindow.cpp: mainwindow.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qwidget.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QLineEdit \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qlineedit.h \
-		plotupdater.h \
+		ads7841.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QObject \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qobject.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QVector \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qvector.h \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QTimer \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qtimer.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QLabel \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qlabel.h \
-		plotupdater2.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QMainWindow \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qmainwindow.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QPushButton \
@@ -860,33 +877,9 @@ moc_mainwindow.cpp: mainwindow.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qwizard.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qtwidgetsversion.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QGridLayout \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QTimer \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qtimer.h \
 		moc_predefs.h \
 		../../xsdk-2023.1/sysroots/x86_64-petalinux-linux/usr/bin/moc
 	/home/amt-04/xsdk-2023.1/sysroots/x86_64-petalinux-linux/usr/bin/moc $(DEFINES) --include /home/amt-04/QtWorkspace/vso/moc_predefs.h -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/lib/mkspecs/linux-oe-g++ -I/home/amt-04/QtWorkspace/vso -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtGui -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/c++/12.2.0 -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/c++/12.2.0/arm-xilinx-linux-gnueabi -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/c++/12.2.0/backward -I/home/amt-04/xsdk-2023.1/sysroots/x86_64-petalinux-linux/usr/lib/arm-xilinx-linux-gnueabi/gcc/arm-xilinx-linux-gnueabi/12.2.0/include -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/lib/arm-xilinx-linux-gnueabi/12.2.0/include -I/home/amt-04/xsdk-2023.1/sysroots/x86_64-petalinux-linux/usr/lib/arm-xilinx-linux-gnueabi/gcc/arm-xilinx-linux-gnueabi/12.2.0/include-fixed -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include mainwindow.h -o moc_mainwindow.cpp
-
-moc_plotupdater.cpp: plotupdater.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QObject \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qobject.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QVector \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qvector.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QLabel \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qlabel.h \
-		moc_predefs.h \
-		../../xsdk-2023.1/sysroots/x86_64-petalinux-linux/usr/bin/moc
-	/home/amt-04/xsdk-2023.1/sysroots/x86_64-petalinux-linux/usr/bin/moc $(DEFINES) --include /home/amt-04/QtWorkspace/vso/moc_predefs.h -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/lib/mkspecs/linux-oe-g++ -I/home/amt-04/QtWorkspace/vso -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtGui -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/c++/12.2.0 -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/c++/12.2.0/arm-xilinx-linux-gnueabi -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/c++/12.2.0/backward -I/home/amt-04/xsdk-2023.1/sysroots/x86_64-petalinux-linux/usr/lib/arm-xilinx-linux-gnueabi/gcc/arm-xilinx-linux-gnueabi/12.2.0/include -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/lib/arm-xilinx-linux-gnueabi/12.2.0/include -I/home/amt-04/xsdk-2023.1/sysroots/x86_64-petalinux-linux/usr/lib/arm-xilinx-linux-gnueabi/gcc/arm-xilinx-linux-gnueabi/12.2.0/include-fixed -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include plotupdater.h -o moc_plotupdater.cpp
-
-moc_plotupdater2.cpp: plotupdater2.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QObject \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qobject.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QVector \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qvector.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QLabel \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qlabel.h \
-		moc_predefs.h \
-		../../xsdk-2023.1/sysroots/x86_64-petalinux-linux/usr/bin/moc
-	/home/amt-04/xsdk-2023.1/sysroots/x86_64-petalinux-linux/usr/bin/moc $(DEFINES) --include /home/amt-04/QtWorkspace/vso/moc_predefs.h -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/lib/mkspecs/linux-oe-g++ -I/home/amt-04/QtWorkspace/vso -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtGui -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/c++/12.2.0 -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/c++/12.2.0/arm-xilinx-linux-gnueabi -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/c++/12.2.0/backward -I/home/amt-04/xsdk-2023.1/sysroots/x86_64-petalinux-linux/usr/lib/arm-xilinx-linux-gnueabi/gcc/arm-xilinx-linux-gnueabi/12.2.0/include -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/lib/arm-xilinx-linux-gnueabi/12.2.0/include -I/home/amt-04/xsdk-2023.1/sysroots/x86_64-petalinux-linux/usr/lib/arm-xilinx-linux-gnueabi/gcc/arm-xilinx-linux-gnueabi/12.2.0/include-fixed -I/home/amt-04/xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include plotupdater2.h -o moc_plotupdater2.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -912,6 +905,28 @@ compiler_lex_clean:
 compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
+
+ads7841.o: ads7841.cpp ads7841.h \
+		hwhandler.h \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QThread \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qthread.h \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QDebug \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qdebug.h \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QFile \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qfile.h \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QCoreApplication \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qcoreapplication.h \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QEventLoop \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qeventloop.h \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QTime \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qdatetime.h \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QObject \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qobject.h \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QTimer \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qtimer.h \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QLabel \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qlabel.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ads7841.o ads7841.cpp
 
 hwhandler.o: hwhandler.cpp hwhandler.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QThread \
@@ -963,14 +978,13 @@ main.o: main.cpp mainwindow.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qwidget.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QLineEdit \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qlineedit.h \
-		plotupdater.h \
+		ads7841.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QObject \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qobject.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QVector \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qvector.h \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QTimer \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qtimer.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QLabel \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qlabel.h \
-		plotupdater2.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QMainWindow \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qmainwindow.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QPushButton \
@@ -1101,8 +1115,6 @@ main.o: main.cpp mainwindow.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qwizard.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qtwidgetsversion.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QGridLayout \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QTimer \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qtimer.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QApplication
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
@@ -1125,14 +1137,13 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qwidget.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QLineEdit \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qlineedit.h \
-		plotupdater.h \
+		ads7841.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QObject \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qobject.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QVector \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qvector.h \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QTimer \
+		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qtimer.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QLabel \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qlabel.h \
-		plotupdater2.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QMainWindow \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qmainwindow.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QPushButton \
@@ -1263,44 +1274,11 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qwizard.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qtwidgetsversion.h \
 		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QGridLayout \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QTimer \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qtimer.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
-plotupdater.o: plotupdater.cpp plotupdater.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QObject \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qobject.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QVector \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qvector.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QLabel \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qlabel.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QDebug \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qdebug.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QTimer \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qtimer.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QFile \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qfile.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QProcess \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qprocess.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o plotupdater.o plotupdater.cpp
-
-plotupdater2.o: plotupdater2.cpp plotupdater2.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QObject \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qobject.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QVector \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qvector.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/QLabel \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtWidgets/qlabel.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QDebug \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qdebug.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QTimer \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qtimer.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QFile \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qfile.h \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/QProcess \
-		../../xsdk-2023.1/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/include/QtCore/qprocess.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o plotupdater2.o plotupdater2.cpp
+moc_ads7841.o: moc_ads7841.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_ads7841.o moc_ads7841.cpp
 
 moc_hwhandler.o: moc_hwhandler.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_hwhandler.o moc_hwhandler.cpp
@@ -1310,12 +1288,6 @@ moc_keypad.o: moc_keypad.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
-
-moc_plotupdater.o: moc_plotupdater.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_plotupdater.o moc_plotupdater.cpp
-
-moc_plotupdater2.o: moc_plotupdater2.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_plotupdater2.o moc_plotupdater2.cpp
 
 ####### Install
 

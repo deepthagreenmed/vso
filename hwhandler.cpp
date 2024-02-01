@@ -25,16 +25,16 @@ hwHandler::hwHandler(QObject *parent):
 }
 
 
-void hwHandler::vso_ontime(double ontime)
+void hwHandler::vso_ontime(int ontime)
 {
-    qDebug()<<ontime;
+    //qDebug()<<ontime;
 
     *((uint16_t *) (mapped_dev_base  + VSO_PWM_ON_REG ))   = (uint16_t)(ontime);
 }
 
-void hwHandler::vso_period(double count)
+void hwHandler::vso_period(int count)
 {
-    qDebug()<<count;
+    //qDebug()<<count;
 
     *((uint16_t *) (mapped_dev_base  + VSO_PWM_PERIOD_REG ))    = (uint16_t)(count);
 }

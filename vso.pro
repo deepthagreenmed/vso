@@ -21,19 +21,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    ads7841.cpp \
     hwhandler.cpp \
     keypad.cpp \
     main.cpp \
-    mainwindow.cpp \
-    plotupdater.cpp \
-    plotupdater2.cpp
+    mainwindow.cpp
 
 HEADERS += \
+    ads7841.h \
     hwhandler.h \
     keypad.h \
-    mainwindow.h \
-    plotupdater.h \
-    plotupdater2.h
+    mainwindow.h
 
 FORMS += \
     keypad.ui \

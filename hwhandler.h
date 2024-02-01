@@ -40,9 +40,10 @@ class hwHandler: public QThread
 public:
     explicit hwHandler(QObject *parent = 0);
     int memfd;
-    static void vso_ontime(double ontime);
-    static void vso_period(double count);
+    static void vso_ontime(int ontime);
+    static void vso_period(int count);
 signals:
 
 };
+
 #endif // HWHANDLER_H

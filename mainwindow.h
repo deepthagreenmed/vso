@@ -3,9 +3,7 @@
 
 #include "hwhandler.h"
 #include "keypad.h"
-#include "plotupdater.h"
-#include "plotupdater2.h"
-
+#include "ads7841.h"
 #include <QMainWindow>
 #include <QPushButton>
 #include <QLabel>
@@ -29,15 +27,6 @@ public:
 
     bool eventFilter(QObject* object, QEvent* event);
 
-    QPushButton *inc_ontime_btn;
-    QPushButton *dec_ontime_btn;
-
-    QPushButton *inc_freq_btn;
-    QPushButton *dec_freq_btn;
-
-    QLineEdit *lineEdit;
-    QLineEdit *lineEdit_2;
-
     double timeon = 10;
     double freq = 8000;
 
@@ -45,22 +34,24 @@ public:
 
     QLabel *label;
 
-//    QwtPlot *plot, *plot2;
-//    QwtPlotCurve *curve, *curve2;
-
     QVBoxLayout *layout;
     QHBoxLayout *layout2;
 
     keypad *key;
 
+
 public slots:
+
+
     void on_pushButton_clicked();
 
     void on_pushButton_2_clicked();
 
-    void on_pushButton_5_clicked();
+    void on_pushButton_3_clicked();
 
-    void on_pushButton_6_clicked();
+    void on_pushButton_4_clicked();
+
+    void on_pushButton_5_clicked();
 
     void on_clicked(const QString& digit);
 
@@ -68,11 +59,19 @@ public slots:
 
      void on_clickedenter();
 
+     void printval(float val);
+
+     void printsample(int sample);
+
+private slots:
+
+
 private:
     Ui::MainWindow *ui;
     hwHandler h;
     bool flag = false;
     double resolution = 0.000000005;
+    ads7841 *adc;
 
 
 };
