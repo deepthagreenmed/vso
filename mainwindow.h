@@ -25,10 +25,12 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void script();
+
     bool eventFilter(QObject* object, QEvent* event);
 
-    double timeon = 10;
-    double freq = 8000;
+    double timeon = 0;
+    double freq = 65536;
 
     double period;
 
@@ -65,6 +67,8 @@ public slots:
 
 private slots:
 
+
+     void on_pushButton_6_clicked();
 
 private:
     Ui::MainWindow *ui;

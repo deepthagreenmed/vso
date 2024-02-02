@@ -27,10 +27,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->lineEdit->clearFocus();
     ui->lineEdit_2->clearFocus();
 
-    timeon=0;
-    freq=65536;
-    h.vso_ontime(((timeon / (100*freq)) / resolution));
-    h.vso_period((1/freq)/ resolution);
+//    timeon=0;
+//    freq=65536;
+//    h.vso_ontime(((timeon / (100*freq)) / resolution));
+//    h.vso_period((1/freq)/ resolution);
 
    // h.vso_ontime(400);
    // h.vso_period(20000);
@@ -38,6 +38,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->lineEdit->setText("duty cycle: " + QString::number(timeon));
     ui->lineEdit_2->setText("frequency: " + QString::number(freq));
     ui->label->setText("period: " + QString::number(period));
+
+  //  script();
+
     //ui->label_2->setText(QString::number(adc->val));
 
 }
@@ -260,4 +263,23 @@ void MainWindow::on_clickedenter()
     ui->label->setText(QString::number(period));
     //ui->label_2->setText(QString::number(adc->val));
 
+}
+
+void MainWindow::script()
+{
+    adc->initSPI();
+
+    float freq = 12000;
+
+    for(float i=30; i<100; i+=0.1)
+    {
+        h.vso_ontime(((i / (100*freq)) / resolution));
+        h.vso_period((1/freq)/ resolution);
+        qDebug()<<i<<adc->stabilize();
+    }
+}
+
+void MainWindow::on_pushButton_6_clicked()
+{
+    script();
 }

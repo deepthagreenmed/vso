@@ -6,27 +6,9 @@ ads7841::ads7841()
 {
     initSPI();
 
-//    int freq=12000;
-//    float j=0.5;
-//    for(int i=30; i<=100; i+=j)
-//    {
-//        h.vso_ontime(((i / (100*freq)) / resolution));
-//        h.vso_period((1/freq)/ resolution);
-//        qDebug()<<"forloop";
-//        stabilize();
-//    }
-
-//    for(float i=0; i<50; i+=0.05)
-//    {
-//        h.vso_ontime(((i / (100*12000)) / resolution));
-//        h.vso_period((1/12000)/ resolution);
-//        qDebug()<<i<<stabilize();
-//    }
-
-
-    timer = new QTimer;
-    connect(timer, SIGNAL(timeout()), this, SLOT(stabilize()));
-    timer->start(100);
+//    timer = new QTimer;
+//    connect(timer, SIGNAL(timeout()), this, SLOT(stabilize()));
+//    timer->start(100);
 
 }
 
@@ -63,7 +45,7 @@ float ads7841::stabilize()
     int avg = (sum/1000) - 40;
 
     val = avg * 0.17;
- //   qDebug()<<"Vaccum"<<val<<avg;
+    //qDebug()<<"Vaccum"<<val<<avg;
 
 
     //val = avg * 0.0236;
